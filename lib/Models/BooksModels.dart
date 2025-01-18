@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 class Book {
   late final String name;
   final Color mainColor;
-  final List<Page> pages;
+  final List<dynamic> pages;
   final DateTime bookTime;
   Book({
     required this.name,

@@ -3,32 +3,28 @@ import 'dart:convert';
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 class Page {
   final String title;
-  final String note;
+  final String content;
   final DateTime dateTime;
-  final int pageNum;
 
   Page({
     required this.title,
-    required this.note,
+    required this.content,
     required this.dateTime,
-    required this.pageNum,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'title': title,
-      'note': note,
+      'content': content,
       'dateTime': dateTime.millisecondsSinceEpoch,
-      'pageNum': pageNum,
     };
   }
 
   factory Page.fromMap(Map<String, dynamic> map) {
     return Page(
       title: map['title'] as String,
-      note: map['note'] as String,
+      content: map['content'] as String,
       dateTime: DateTime.fromMillisecondsSinceEpoch(map['dateTime'] as int),
-      pageNum: map['pageNum'] as int,
     );
   }
 

@@ -2,7 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:mybook_app/Screens/Main/BookPagesPage.dart';
-import 'package:mybook_app/Widgets/DeleteBookSheet.dart';
+import 'package:mybook_app/Widgets/BookSheets/DeleteBookSheet.dart';
 
 class BookWidget extends StatelessWidget {
   final Color mainColor;
@@ -25,6 +25,8 @@ class BookWidget extends StatelessWidget {
         MaterialPageRoute(
           builder: (context) => BookPagesPage(
             bookName: name,
+            bookIndex: index,
+            refrech: () => refrech(),
           ),
         ),
       ),

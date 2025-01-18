@@ -4,8 +4,10 @@ import 'dart:ui';
 
 import 'package:mybook_app/Data/DataBase.dart';
 import 'package:mybook_app/Models/BooksModels.dart';
+import 'package:mybook_app/Models/PageModels.dart';
 
 class BooksServices {
+  //* THE BOOKS PART
   //* add a book
   void addBook({required String name, required Color mainColor}) {
     books.add(
@@ -29,4 +31,24 @@ class BooksServices {
     books[index].name = newName;
     print("book update");
   }
+
+  //* THE PAGES PART
+  //* add page
+  void addPage(
+      {required int bookIndex,
+      required String title,
+      required String content}) {
+    books[bookIndex].pages.add(
+          Page(
+            title: title,
+            content: content,
+            dateTime: DateTime.now(),
+          ),
+        );
+    print("Page Added");
+  }
+
+  //* delete page
+
+  //* update page
 }

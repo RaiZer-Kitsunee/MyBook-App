@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:mybook_app/Data/DataBase.dart';
 import 'package:mybook_app/Widgets/BookWidget.dart';
 import 'package:mybook_app/Widgets/MemorieWidget.dart';
-import 'package:mybook_app/Widgets/AddBookSheet.dart';
+import 'package:mybook_app/Widgets/BookSheets/AddBookSheet.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -131,37 +131,7 @@ class _HomePageState extends State<HomePage> {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 15),
                   child: books.isEmpty
-                      ? Center(
-                          child: GestureDetector(
-                            onTap: () => AddBookSheet(
-                              context,
-                              booktitleController,
-                              () => setState(() {}),
-                            ),
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: Colors.grey.shade400,
-                                borderRadius: BorderRadius.circular(10),
-                                boxShadow: [
-                                  BoxShadow(
-                                    blurRadius: 1,
-                                    color: Colors.grey.shade700,
-                                    spreadRadius: 1,
-                                    offset: Offset(-5, 5),
-                                  )
-                                ],
-                              ),
-                              padding: EdgeInsets.all(10),
-                              child: Text(
-                                "Create First Book",
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                ),
-                              ),
-                            ),
-                          ),
-                        )
+                      ? IfThereIsNoBooks(context)
                       : Column(
                           children: [
                             //* the tabs
@@ -189,28 +159,19 @@ class _HomePageState extends State<HomePage> {
                                 child: TabBarView(
                                   children: List.generate(
                                     books.length,
-                                    (index) => books[index].pages.isEmpty
-                                        ? Center(
-                                            child: Container(
-                                              decoration: BoxDecoration(),
-                                              child: Center(
-                                                child: Text(
-                                                  "Let's Write Some Memories...",
-                                                  style: TextStyle(
-                                                    color: Colors.grey.shade600,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 20,
-                                                  ),
-                                                ),
-                                              ),
-                                            ),
-                                          )
+                                    (bookIndex) => books[bookIndex]
+                                            .pages
+                                            .isEmpty
+                                        ? IfThereIsNoBookPages()
                                         : ListView.builder(
                                             padding: EdgeInsets.zero,
                                             itemCount:
-                                                books[index].pages.length,
-                                            itemBuilder: (context, index) =>
-                                                MemorieWidget(),
+                                                books[bookIndex].pages.length,
+                                            itemBuilder: (context, pageIndex) =>
+                                                MemorieWidget(
+                                              bookIndex: bookIndex,
+                                              pageIndex: pageIndex,
+                                            ),
                                           ),
                                   ),
                                 ),
@@ -222,6 +183,58 @@ class _HomePageState extends State<HomePage> {
               ),
             )
           ],
+        ),
+      ),
+    );
+  }
+
+  Center IfThereIsNoBookPages() {
+    return Center(
+      child: Container(
+        decoration: BoxDecoration(),
+        child: Center(
+          child: Text(
+            "Let's Write Some Memories...",
+            style: TextStyle(
+              color: Colors.grey.shade600,
+              fontWeight: FontWeight.bold,
+              fontSize: 20,
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Center IfThereIsNoBooks(BuildContext context) {
+    return Center(
+      child: GestureDetector(
+        onTap: () => AddBookSheet(
+          context,
+          booktitleController,
+          () => setState(() {}),
+        ),
+        child: Container(
+          decoration: BoxDecoration(
+            color: Colors.grey.shade400,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 1,
+                color: Colors.grey.shade700,
+                spreadRadius: 1,
+                offset: Offset(-5, 5),
+              )
+            ],
+          ),
+          padding: EdgeInsets.all(10),
+          child: Text(
+            "Create First Book",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
         ),
       ),
     );
