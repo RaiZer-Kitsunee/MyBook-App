@@ -1,42 +1,34 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first, deprecated_member_use
-import 'dart:convert';
+// ignore_for_file: public_member_api_docs, sort_constructors_first, deprecated_member_use, file_names
 
 import 'package:flutter/material.dart';
+import 'package:mybook_app/Models/PageModels.dart';
 
-class Book {
-  late final String name;
-  final Color mainColor;
-  final List<dynamic> pages;
-  final DateTime bookTime;
-  Book({
+class BookModels {
+  String name;
+  Color mainColor;
+  List<dynamic> pages;
+  DateTime bookTime;
+
+  BookModels({
     required this.name,
     required this.mainColor,
     required this.pages,
     required this.bookTime,
   });
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'name': name,
-      'mainColor': mainColor.value,
-      'pages': pages,
-      'bookTime': bookTime,
-    };
-  }
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'mainColor': mainColor.value,
+        'pages': pages.map((e) => e.toJson()).toList(),
+        'bookTime': bookTime.millisecondsSinceEpoch,
+      };
 
-  factory Book.fromMap(Map<String, dynamic> map) {
-    return Book(
-      name: map['name'] as String,
-      mainColor: Color(map['mainColor'] as int),
-      pages: List<Page>.from(
-        (map['pages'] as List<Page>),
-      ),
-      bookTime: map['bookTime'] as DateTime,
+  factory BookModels.fromJson(Map<String, dynamic> json) {
+    return BookModels(
+      name: json["name"],
+      mainColor: Color(json["mainColor"]),
+      pages: json["pages"].map((e) => PageModels.fromJson(e)).toList(),
+      bookTime: DateTime.fromMillisecondsSinceEpoch(json["bookTime"]),
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  factory Book.fromJson(String source) =>
-      Book.fromMap(json.decode(source) as Map<String, dynamic>);
 }

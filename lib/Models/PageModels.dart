@@ -1,18 +1,16 @@
-import 'dart:convert';
-
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-class Page {
+class PageModels {
   final String title;
   final String content;
   final DateTime dateTime;
 
-  Page({
+  PageModels({
     required this.title,
     required this.content,
     required this.dateTime,
   });
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return <String, dynamic>{
       'title': title,
       'content': content,
@@ -20,16 +18,11 @@ class Page {
     };
   }
 
-  factory Page.fromMap(Map<String, dynamic> map) {
-    return Page(
-      title: map['title'] as String,
-      content: map['content'] as String,
-      dateTime: DateTime.fromMillisecondsSinceEpoch(map['dateTime'] as int),
+  factory PageModels.fromJson(Map<String, dynamic> json) {
+    return PageModels(
+      title: json['title'],
+      content: json['content'],
+      dateTime: DateTime.fromMillisecondsSinceEpoch(json['dateTime']),
     );
   }
-
-  String toJson() => json.encode(toMap());
-
-  factory Page.fromJson(String source) =>
-      Page.fromMap(json.decode(source) as Map<String, dynamic>);
 }

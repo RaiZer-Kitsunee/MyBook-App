@@ -1,10 +1,14 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, non_constant_identifier_names
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, non_constant_identifier_names, avoid_print
+
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:mybook_app/Data/DataBase.dart';
+import 'package:mybook_app/Models/BooksModels.dart';
 import 'package:mybook_app/Widgets/BookWidget.dart';
 import 'package:mybook_app/Widgets/MemorieWidget.dart';
 import 'package:mybook_app/Widgets/BookSheets/AddBookSheet.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -16,6 +20,31 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   //* controllers
   TextEditingController booktitleController = TextEditingController();
+
+  //* refrences
+  late SharedPreferences pref;
+
+  //* functions
+  readBooksFromSP() async {
+    pref = await SharedPreferences.getInstance();
+
+    String? loadedStringList = pref.getString(booksKey);
+
+    if (loadedStringList != null) {
+      List<dynamic> loadedJsonList = jsonDecode(loadedStringList);
+      books = loadedJsonList.map((e) => BookModels.fromJson(e)).toList();
+      setState(() {});
+      print("Book List is Loaded");
+    }
+
+    print("the json String has come empty");
+  }
+
+  @override
+  void initState() {
+    readBooksFromSP();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

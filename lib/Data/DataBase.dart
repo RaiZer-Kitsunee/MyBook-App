@@ -3,4 +3,8 @@
 
 import 'package:mybook_app/Models/BooksModels.dart';
 
-List<Book> books = [];
+//* Lists
+List<BookModels> books = [];
+
+//* Keys
+final String booksKey = "BooksKey";

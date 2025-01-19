@@ -3,32 +3,33 @@
 import 'dart:ui';
 
 import 'package:mybook_app/Data/DataBase.dart';
+import 'package:mybook_app/Data/DataStorage.dart';
 import 'package:mybook_app/Models/BooksModels.dart';
 import 'package:mybook_app/Models/PageModels.dart';
 
 class BooksServices {
+  DataStorage Storage = DataStorage();
+
   //* THE BOOKS PART
   //* add a book
   void addBook({required String name, required Color mainColor}) {
-    books.add(
-      Book(
-          name: name,
-          mainColor: mainColor,
-          bookTime: DateTime.now(),
-          pages: []),
-    );
+    books.add(BookModels(
+        name: name, mainColor: mainColor, bookTime: DateTime.now(), pages: []));
+    Storage.saveDataInSP();
     print("book added");
   }
 
   //* delete book
   void deleteBook({required int index}) {
     books.removeAt(index);
+    Storage.saveDataInSP();
     print("book deleted");
   }
 
   //* maybe edit the name of the book
   void updateBook({required int index, required String newName}) {
     books[index].name = newName;
+    Storage.saveDataInSP();
     print("book update");
   }
 
@@ -39,16 +40,28 @@ class BooksServices {
       required String title,
       required String content}) {
     books[bookIndex].pages.add(
-          Page(
-            title: title,
-            content: content,
-            dateTime: DateTime.now(),
-          ),
-        );
+        PageModels(title: title, content: content, dateTime: DateTime.now()));
+    Storage.saveDataInSP();
     print("Page Added");
   }
 
   //* delete page
+  void deletePage({required int bookIndex, required int pageIndex}) {
+    books[bookIndex].pages.removeAt(pageIndex);
+    Storage.saveDataInSP();
+    print("Page removed Done");
+  }
 
   //* update page
+  void updatePage({
+    required int bookIndex,
+    required int pageIndex,
+    required String newTitle,
+    required String newContent,
+  }) {
+    books[bookIndex].pages[pageIndex].title = newTitle;
+    books[bookIndex].pages[pageIndex].content = newContent;
+    Storage.saveDataInSP();
+    print("Page Update Done");
+  }
 }
