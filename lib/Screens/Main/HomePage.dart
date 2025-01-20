@@ -8,6 +8,8 @@ import 'package:mybook_app/Models/BooksModels.dart';
 import 'package:mybook_app/Widgets/BookWidget.dart';
 import 'package:mybook_app/Widgets/MemorieWidget.dart';
 import 'package:mybook_app/Widgets/BookSheets/AddBookSheet.dart';
+import 'package:mybook_app/Widgets/MyDismissible.dart';
+import 'package:mybook_app/Widgets/MySnackBar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
@@ -101,7 +103,8 @@ class _HomePageState extends State<HomePage> {
 
                       //* the more button
                       IconButton(
-                        onPressed: () {},
+                        onPressed: () => MySnackBar(
+                            context: context, text: "Setting Next Update"),
                         icon: Icon(
                           Icons.more_vert_outlined,
                           size: 30,
@@ -119,20 +122,7 @@ class _HomePageState extends State<HomePage> {
               child: SizedBox(
                 height: 300,
                 child: books.isEmpty
-                    ? Row(
-                        children: List.generate(
-                          3,
-                          (index) => Container(
-                            height: 400,
-                            width: 100,
-                            margin: EdgeInsets.all(10),
-                            decoration: BoxDecoration(
-                              color: Colors.grey.shade300,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                          ),
-                        ),
-                      )
+                    ? ifTheBooksIsEmpty()
                     : ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: books.length,
@@ -197,9 +187,15 @@ class _HomePageState extends State<HomePage> {
                                             itemCount:
                                                 books[bookIndex].pages.length,
                                             itemBuilder: (context, pageIndex) =>
-                                                MemorieWidget(
+                                                MyDismissible(
+                                              context: context,
                                               bookIndex: bookIndex,
                                               pageIndex: pageIndex,
+                                              refrech: () => setState(() {}),
+                                              child: MemorieWidget(
+                                                bookIndex: bookIndex,
+                                                pageIndex: pageIndex,
+                                              ),
                                             ),
                                           ),
                                   ),
@@ -212,6 +208,23 @@ class _HomePageState extends State<HomePage> {
               ),
             )
           ],
+        ),
+      ),
+    );
+  }
+
+  Row ifTheBooksIsEmpty() {
+    return Row(
+      children: List.generate(
+        3,
+        (index) => Container(
+          height: 400,
+          width: 100,
+          margin: EdgeInsets.all(10),
+          decoration: BoxDecoration(
+            color: Colors.grey.shade300,
+            borderRadius: BorderRadius.circular(12),
+          ),
         ),
       ),
     );

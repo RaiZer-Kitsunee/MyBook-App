@@ -5,18 +5,20 @@ import 'package:intl/intl.dart';
 import 'package:mybook_app/Services/BooksServices.dart';
 import 'package:mybook_app/Widgets/MySnackBar.dart';
 
-class AddPageScreen extends StatelessWidget {
+class UpdatePageScreen extends StatelessWidget {
   final VoidCallback refrech;
   final TextEditingController titleController;
   final TextEditingController contentController;
   final int bookIndex;
+  final int pageIndex;
 
-  const AddPageScreen({
+  const UpdatePageScreen({
     super.key,
     required this.refrech,
     required this.titleController,
     required this.contentController,
     required this.bookIndex,
+    required this.pageIndex,
   });
 
   @override
@@ -36,15 +38,16 @@ class AddPageScreen extends StatelessWidget {
                         contentController.text.isEmpty) {
                       print("its empty");
                     } else {
-                      booksServices.addPage(
+                      booksServices.updatePage(
                         bookIndex: bookIndex,
-                        title: titleController.text,
-                        content: contentController.text,
+                        pageIndex: pageIndex,
+                        newTitle: titleController.text,
+                        newContent: contentController.text,
                       );
+                      Navigator.pop(context);
+                      refrech();
+                      MySnackBar(text: "Page Updated", context: context);
                     }
-                    Navigator.pop(context);
-                    refrech();
-                    MySnackBar(text: "New Page Added", context: context);
                   },
                   icon: Icon(
                     size: 30,

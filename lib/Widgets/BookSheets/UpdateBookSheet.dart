@@ -2,10 +2,12 @@
 
 import 'package:flutter/material.dart';
 import 'package:mybook_app/Services/BooksServices.dart';
+import 'package:mybook_app/Widgets/MySnackBar.dart';
 
 void UpdateBookSheet(
   BuildContext context,
   TextEditingController titleController,
+  int bookIndex,
   VoidCallback refrech,
 ) {
   final BooksServices booksServices = BooksServices();
@@ -27,7 +29,7 @@ void UpdateBookSheet(
         children: [
           //* title
           Text(
-            "Your Name Book is:",
+            "Your new Book Name is:",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.black,
@@ -55,7 +57,7 @@ void UpdateBookSheet(
                     width: 2,
                   ),
                 ),
-                hintText: "How Can You Discribe that.....",
+                hintText: "New Idea....?",
                 hintStyle: TextStyle(color: Colors.grey),
               ),
             ),
@@ -72,13 +74,14 @@ void UpdateBookSheet(
                   text: "Update",
                   onTap: () {
                     if (titleController.text.isNotEmpty) {
-                      booksServices.addBook(
-                        name: titleController.text,
-                        mainColor: Colors.blue,
+                      booksServices.updateBook(
+                        index: bookIndex,
+                        newName: titleController.text,
                       );
                       Navigator.pop(context);
                       titleController.clear();
                       refrech();
+                      MySnackBar(text: "Book Title Updated", context: context);
                     }
                   },
                 ),

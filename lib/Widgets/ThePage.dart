@@ -3,20 +3,29 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:mybook_app/Data/DataBase.dart';
+import 'package:mybook_app/Services/BooksServices.dart';
+import 'package:mybook_app/Widgets/PagesSheet/updatePageScreen.dart';
 import 'package:page_flip/page_flip.dart';
 
 class Pages extends StatelessWidget {
   final int bookIndex;
   final int diractePage;
+  final TextEditingController titleController;
+  final TextEditingController contentController;
+  final void Function() refrech;
   const Pages({
     super.key,
     required this.bookIndex,
     this.diractePage = 0,
+    required this.titleController,
+    required this.contentController,
+    required this.refrech,
   });
 
   @override
   Widget build(BuildContext context) {
     GlobalKey flipController = GlobalKey<PageFlipWidgetState>();
+    BooksServices booksServices = BooksServices();
     return Expanded(
       child: Stack(
         children: [
@@ -56,6 +65,9 @@ class Pages extends StatelessWidget {
                       context: context,
                       pageIndex: pageIndex,
                       bookIndex: bookIndex,
+                      booksServices: booksServices,
+                      titleController: titleController,
+                      contentController: contentController,
                     ),
                   ),
                 ),
@@ -73,10 +85,13 @@ class Pages extends StatelessWidget {
     );
   }
 
-  SizedBox pageContent({
+  GestureDetector pageContent({
     required BuildContext context,
     required int bookIndex,
     required int pageIndex,
+    required BooksServices booksServices,
+    required TextEditingController titleController,
+    required TextEditingController contentController,
   }) {
     //* acutall variabels
     String title = books[bookIndex].pages[pageIndex].title;
@@ -88,59 +103,77 @@ class Pages extends StatelessWidget {
         .format(books[bookIndex].pages[pageIndex].dateTime)
         .toString();
 
-    return SizedBox(
-      width: MediaQuery.sizeOf(context).width,
-      height: MediaQuery.sizeOf(context).height,
-      child: Padding(
-        padding: const EdgeInsets.only(left: 40),
-        child: Column(
-          children: [
-            //* day num - month - time -------------- day
-            Padding(
-              padding: const EdgeInsets.only(right: 40, top: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(dateNumbers),
-                  Text(dateName),
-                ],
-              ),
+    return GestureDetector(
+      onDoubleTap: () {
+        titleController.text = title;
+        contentController.text = content;
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => UpdatePageScreen(
+              refrech: refrech,
+              titleController: titleController,
+              contentController: contentController,
+              bookIndex: bookIndex,
+              pageIndex: pageIndex,
             ),
-
-            //* divider
-            Container(
-              width: MediaQuery.sizeOf(context).width,
-              height: 0.9,
-              margin: EdgeInsets.only(right: 35, top: 15),
-              decoration: BoxDecoration(
-                color: Colors.grey,
+          ),
+        );
+      },
+      child: SizedBox(
+        width: MediaQuery.sizeOf(context).width,
+        height: MediaQuery.sizeOf(context).height,
+        child: Padding(
+          padding: const EdgeInsets.only(left: 40),
+          child: Column(
+            children: [
+              //* day num - month - time -------------- day
+              Padding(
+                padding: const EdgeInsets.only(right: 40, top: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(dateNumbers),
+                    Text(dateName),
+                  ],
+                ),
               ),
-            ),
 
-            Container(
-              margin: EdgeInsets.only(right: 20, top: 10),
-              width: MediaQuery.sizeOf(context).width,
-              height: 540,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  //* page
-                  Text(
-                    title,
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20,
+              //* divider
+              Container(
+                width: MediaQuery.sizeOf(context).width,
+                height: 0.9,
+                margin: EdgeInsets.only(right: 35, top: 15),
+                decoration: BoxDecoration(
+                  color: Colors.grey,
+                ),
+              ),
+
+              Container(
+                margin: EdgeInsets.only(right: 20, top: 10),
+                width: MediaQuery.sizeOf(context).width,
+                height: 540,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    //* page
+                    Text(
+                      title,
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 20,
+                      ),
                     ),
-                  ),
-                  SizedBox(height: 10),
-                  Text(content),
-                ],
+                    SizedBox(height: 10),
+                    Text(content),
+                  ],
+                ),
               ),
-            ),
 
-            //* page number
-            Text((pageIndex + 1).toString()),
-          ],
+              //* page number
+              Text((pageIndex + 1).toString()),
+            ],
+          ),
         ),
       ),
     );

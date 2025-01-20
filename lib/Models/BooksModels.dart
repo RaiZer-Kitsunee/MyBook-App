@@ -4,10 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:mybook_app/Models/PageModels.dart';
 
 class BookModels {
-  String name;
-  Color mainColor;
-  List<dynamic> pages;
-  DateTime bookTime;
+  late final String name;
+  final Color mainColor;
+  final List<dynamic> pages;
+  final DateTime bookTime;
 
   BookModels({
     required this.name,

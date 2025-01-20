@@ -1,16 +1,19 @@
 // ignore_for_file: prefer_const_constructors, non_constant_identifier_names, file_names
 
 import 'package:flutter/material.dart';
+import 'package:mybook_app/Data/DataBase.dart';
+import 'package:mybook_app/Screens/Main/HomePage.dart';
 import 'package:mybook_app/Services/BooksServices.dart';
 import 'package:mybook_app/Widgets/MySnackBar.dart';
 
-void AddBookSheet(
+void DeletePageSheet(
   BuildContext context,
-  TextEditingController titleController,
+  int bookIndex,
+  int pageIndex,
+  String titlePage,
   VoidCallback refrech,
 ) {
   final BooksServices booksServices = BooksServices();
-
   showModalBottomSheet(
     context: context,
     builder: (context) => Container(
@@ -21,14 +24,14 @@ void AddBookSheet(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),
         ),
-        color: Colors.white,
+        color: Colors.grey.shade400,
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           //* title
           Text(
-            "Your Name Book is:",
+            "Delete:",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               color: Colors.black,
@@ -36,57 +39,50 @@ void AddBookSheet(
             ),
           ),
 
-          //* textfield
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-            child: TextField(
-              controller: titleController,
-              decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(
-                    color: Colors.grey,
-                    width: 2,
-                  ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(
-                    color: Colors.black,
-                    width: 2,
-                  ),
-                ),
-                hintText: "Book OF .....",
-                hintStyle: TextStyle(color: Colors.grey),
-              ),
+          SizedBox(height: 10),
+
+          //* secound title
+          Text(
+            "You wan't to Delete $titlePage",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Colors.black,
+              fontSize: 20,
             ),
           ),
+
+          SizedBox(height: 10),
 
           //* buttons
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Padding(
-                padding: const EdgeInsets.only(left: 40),
+                padding: const EdgeInsets.only(left: 80),
                 child: Button(
-                  color: Colors.blue,
-                  text: "Save",
+                  color: Colors.red,
+                  text: "Delete",
                   onTap: () {
-                    if (titleController.text.isNotEmpty) {
-                      booksServices.addBook(
-                        name: titleController.text,
-                        mainColor: Colors.blue,
-                      );
-                      Navigator.pop(context);
-                      titleController.clear();
-                      refrech();
-                      MySnackBar(text: "New Book Added", context: context);
-                    }
+                    booksServices.deletePage(
+                      bookIndex: bookIndex,
+                      pageIndex: pageIndex,
+                    );
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(),
+                      ),
+                    );
+                    refrech();
+                    MySnackBar(
+                      text: "Page Of ${books[bookIndex].name} is Deleted",
+                      context: context,
+                    );
                   },
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.only(right: 40),
+                padding: const EdgeInsets.only(right: 80),
                 child: Button(
                   text: "Cancel",
                   color: Colors.black,

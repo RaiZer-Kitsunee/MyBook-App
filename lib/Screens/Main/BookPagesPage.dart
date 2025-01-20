@@ -2,6 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:mybook_app/Data/DataBase.dart';
+import 'package:mybook_app/Data/iconsMenu.dart';
+import 'package:mybook_app/Widgets/BookSheets/DeleteBookSheet.dart';
+import 'package:mybook_app/Widgets/BookSheets/UpdateBookSheet.dart';
 import 'package:mybook_app/Widgets/ThePage.dart';
 import 'package:mybook_app/Widgets/myFloatingAB.dart';
 
@@ -76,10 +79,52 @@ class _BookPagesPageState extends State<BookPagesPage> {
                   ),
 
                   //* more buttons
-                  Icon(
-                    Icons.more_vert_outlined,
-                    size: 30,
-                  ),
+                  PopupMenuButton<IconMenu>(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    iconSize: 25,
+                    itemBuilder: (context) => IconsMenu.items
+                        .map(
+                          (item) => PopupMenuItem<IconMenu>(
+                            value: item,
+                            child: ListTile(
+                              leading: Icon(
+                                item.icon,
+                              ),
+                              title: Text(
+                                item.text,
+                              ),
+                            ),
+                          ),
+                        )
+                        .toList(),
+                    onSelected: (value) {
+                      switch (value) {
+                        case IconsMenu.edit:
+                          titleController.text = widget.bookName;
+                          UpdateBookSheet(
+                            context,
+                            titleController,
+                            widget.bookIndex,
+                            () => setState(() {
+                              widget.refrech();
+                            }),
+                          );
+                          break;
+                        case IconsMenu.delete:
+                          DeleteBookSheet(
+                            context,
+                            widget.bookIndex,
+                            widget.bookName,
+                            () => setState(() {
+                              widget.refrech();
+                            }),
+                          );
+                          break;
+                      }
+                    },
+                  )
                 ],
               ),
             ),
@@ -90,6 +135,11 @@ class _BookPagesPageState extends State<BookPagesPage> {
                 : Pages(
                     bookIndex: widget.bookIndex,
                     diractePage: widget.diractePage,
+                    titleController: titleController,
+                    contentController: contentController,
+                    refrech: () => setState(() {
+                      widget.refrech();
+                    }),
                   ),
 
             //* tools

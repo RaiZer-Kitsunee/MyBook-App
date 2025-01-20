@@ -1,10 +1,17 @@
 // ignore_for_file: prefer_const_constructors, non_constant_identifier_names, file_names
 
 import 'package:flutter/material.dart';
+import 'package:mybook_app/Data/DataBase.dart';
+import 'package:mybook_app/Screens/Main/HomePage.dart';
 import 'package:mybook_app/Services/BooksServices.dart';
+import 'package:mybook_app/Widgets/MySnackBar.dart';
 
-void DeleteBookSheet(BuildContext context, int bookIndex, VoidCallback refrech,
-    String bookName) {
+void DeleteBookSheet(
+  BuildContext context,
+  int bookIndex,
+  String bookName,
+  VoidCallback refrech,
+) {
   final BooksServices booksServices = BooksServices();
 
   showModalBottomSheet(
@@ -57,8 +64,16 @@ void DeleteBookSheet(BuildContext context, int bookIndex, VoidCallback refrech,
                   text: "Delete",
                   onTap: () {
                     booksServices.deleteBook(index: bookIndex);
-                    Navigator.pop(context);
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => HomePage(),
+                      ),
+                    );
                     refrech();
+                    MySnackBar(
+                        text: "${books[bookIndex].name} Deleted",
+                        context: context);
                   },
                 ),
               ),

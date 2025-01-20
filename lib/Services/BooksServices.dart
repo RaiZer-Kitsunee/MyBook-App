@@ -1,7 +1,8 @@
-// ignore_for_file: file_names, avoid_print
+// ignore_for_file: file_names, avoid_print, non_constant_identifier_names
 
 import 'dart:ui';
 
+import 'package:flutter/material.dart';
 import 'package:mybook_app/Data/DataBase.dart';
 import 'package:mybook_app/Data/DataStorage.dart';
 import 'package:mybook_app/Models/BooksModels.dart';
@@ -59,8 +60,15 @@ class BooksServices {
     required String newTitle,
     required String newContent,
   }) {
-    books[bookIndex].pages[pageIndex].title = newTitle;
-    books[bookIndex].pages[pageIndex].content = newContent;
+    books[bookIndex].pages.removeAt(pageIndex);
+    books[bookIndex].pages.insert(
+          pageIndex,
+          PageModels(
+            title: newTitle,
+            content: newContent,
+            dateTime: DateTime.now(),
+          ),
+        );
     Storage.saveDataInSP();
     print("Page Update Done");
   }
