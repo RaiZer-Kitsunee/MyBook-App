@@ -1,7 +1,6 @@
 // ignore_for_file: prefer_const_constructors, file_names
 
 import 'package:flutter/material.dart';
-import 'package:mybook_app/Data/DataBase.dart';
 import 'package:mybook_app/Widgets/PagesSheet/addPageScreen.dart';
 
 FloatingActionButton myFloatingActionButton({
@@ -24,11 +23,11 @@ FloatingActionButton myFloatingActionButton({
       ),
     ),
     shape: CircleBorder(),
-    backgroundColor: books[bookIndex].mainColor,
+    backgroundColor: Color(0xFFE4CCB9),
     child: Icon(
       Icons.add,
       size: 30,
-      color: Colors.black,
+      color: Color(0xFF5E4D46),
     ),
   );
 }

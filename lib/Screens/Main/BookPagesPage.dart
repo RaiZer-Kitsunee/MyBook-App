@@ -1,4 +1,4 @@
-// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables
+// ignore_for_file: prefer_const_constructors, prefer_const_literals_to_create_immutables, non_constant_identifier_names
 
 import 'package:flutter/material.dart';
 import 'package:mybook_app/Data/DataBase.dart';
@@ -31,6 +31,7 @@ class _BookPagesPageState extends State<BookPagesPage> {
     TextEditingController titleController = TextEditingController();
     TextEditingController contentController = TextEditingController();
     return Scaffold(
+      backgroundColor: Color(0xFFF3E1D3),
       floatingActionButton: myFloatingActionButton(
         context: context,
         bookIndex: widget.bookIndex,
@@ -80,10 +81,11 @@ class _BookPagesPageState extends State<BookPagesPage> {
 
                   //* more buttons
                   PopupMenuButton<IconMenu>(
+                    color: Color(0xFFF3E1D3),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(16),
                     ),
-                    iconSize: 25,
+                    iconSize: 30,
                     itemBuilder: (context) => IconsMenu.items
                         .map(
                           (item) => PopupMenuItem<IconMenu>(
@@ -91,9 +93,13 @@ class _BookPagesPageState extends State<BookPagesPage> {
                             child: ListTile(
                               leading: Icon(
                                 item.icon,
+                                color: Color(0xFF5E4D46),
                               ),
                               title: Text(
                                 item.text,
+                                style: TextStyle(
+                                  color: Color(0xFF5E4D46),
+                                ),
                               ),
                             ),
                           ),
@@ -173,10 +179,15 @@ class _BookPagesPageState extends State<BookPagesPage> {
           Container(
             margin: EdgeInsets.only(right: 20, top: 15, bottom: 15),
             decoration: BoxDecoration(
-              color: Colors.green,
+              color: Color(0xFFFBFBFB),
               borderRadius: BorderRadius.horizontal(
                 right: Radius.circular(50),
                 left: Radius.circular(20),
+              ),
+              border: Border(
+                right: BorderSide(color: Color(0xFFCBC6BF)),
+                bottom: BorderSide(color: Color(0xFFCBC6BF)),
+                top: BorderSide(color: Color(0xFFCBC6BF)),
               ),
             ),
             child: Padding(
@@ -186,7 +197,7 @@ class _BookPagesPageState extends State<BookPagesPage> {
                   borderRadius: BorderRadius.horizontal(
                     right: Radius.circular(50),
                   ),
-                  color: Colors.white,
+                  color: Color(0xFFFBFBFB),
                 ),
                 child: Padding(
                   padding: const EdgeInsets.only(top: 30),
@@ -207,9 +218,16 @@ class _BookPagesPageState extends State<BookPagesPage> {
           ),
           //* the left line book page
           Container(
-            color: Colors.grey,
             width: 15,
             margin: EdgeInsets.symmetric(vertical: 15),
+            decoration: BoxDecoration(
+              color: Color(0xFFEFE7E4),
+              border: Border(
+                right: BorderSide(color: Color(0xFFCBC6BF)),
+                bottom: BorderSide(color: Color(0xFFCBC6BF)),
+                top: BorderSide(color: Color(0xFFCBC6BF)),
+              ),
+            ),
           )
         ],
       ),

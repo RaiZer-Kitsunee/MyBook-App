@@ -1,8 +1,5 @@
 // ignore_for_file: file_names, avoid_print, non_constant_identifier_names
 
-import 'dart:ui';
-
-import 'package:flutter/material.dart';
 import 'package:mybook_app/Data/DataBase.dart';
 import 'package:mybook_app/Data/DataStorage.dart';
 import 'package:mybook_app/Models/BooksModels.dart';
@@ -13,9 +10,8 @@ class BooksServices {
 
   //* THE BOOKS PART
   //* add a book
-  void addBook({required String name, required Color mainColor}) {
-    books.add(BookModels(
-        name: name, mainColor: mainColor, bookTime: DateTime.now(), pages: []));
+  void addBook({required String name}) {
+    books.add(BookModels(name: name, bookTime: DateTime.now(), pages: []));
     Storage.saveDataInSP();
     print("book added");
   }

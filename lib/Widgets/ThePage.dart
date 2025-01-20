@@ -33,10 +33,15 @@ class Pages extends StatelessWidget {
           Container(
             margin: EdgeInsets.only(right: 20, top: 15, bottom: 15),
             decoration: BoxDecoration(
-              color: Colors.green,
+              color: Color(0xFFFBFBFB),
               borderRadius: BorderRadius.horizontal(
                 right: Radius.circular(50),
                 left: Radius.circular(20),
+              ),
+              border: Border(
+                right: BorderSide(color: Color(0xFFCBC6BF)),
+                bottom: BorderSide(color: Color(0xFFCBC6BF)),
+                top: BorderSide(color: Color(0xFFCBC6BF)),
               ),
             ),
             child: Padding(
@@ -51,10 +56,10 @@ class Pages extends StatelessWidget {
                 child: PageFlipWidget(
                   initialIndex: diractePage,
                   key: flipController,
-                  backgroundColor: Colors.white,
+                  backgroundColor: Color(0xFFFBFBFB),
                   // isRightSwipe: true,
                   lastPage: Container(
-                    color: Colors.white,
+                    color: Color(0xFFFBFBFB),
                     child: const Center(
                       child: Text('Last Page!'),
                     ),
@@ -76,9 +81,16 @@ class Pages extends StatelessWidget {
           ),
           //* the left line book page
           Container(
-            color: Colors.grey,
             width: 15,
             margin: EdgeInsets.symmetric(vertical: 15),
+            decoration: BoxDecoration(
+              color: Color(0xFFEFE7E4),
+              border: Border(
+                right: BorderSide(color: Color(0xFFCBC6BF)),
+                bottom: BorderSide(color: Color(0xFFCBC6BF)),
+                top: BorderSide(color: Color(0xFFCBC6BF)),
+              ),
+            ),
           )
         ],
       ),

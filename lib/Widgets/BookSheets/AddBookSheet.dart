@@ -75,7 +75,6 @@ void AddBookSheet(
                     if (titleController.text.isNotEmpty) {
                       booksServices.addBook(
                         name: titleController.text,
-                        mainColor: Colors.blue,
                       );
                       Navigator.pop(context);
                       titleController.clear();
