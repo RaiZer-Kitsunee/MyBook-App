@@ -24,66 +24,59 @@ void DeleteBookSheet(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),
         ),
-        color: Colors.grey.shade400,
+        color: Color(0xFFF3E1D3),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          //* title
-          Text(
-            "Delete:",
-            style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-              fontSize: 16,
-            ),
-          ),
-
-          SizedBox(height: 10),
-
           //* secound title
           Text(
             "You wan't to Delete $bookName",
             style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-              fontSize: 20,
+              color: Color(0xFF5D4C46),
+              fontSize: 25,
+              fontStyle: FontStyle.italic,
             ),
           ),
 
           SizedBox(height: 10),
 
           //* buttons
-          Row(
+          Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding: const EdgeInsets.only(left: 80),
-                child: Button(
-                  color: Colors.red,
-                  text: "Delete",
-                  onTap: () {
-                    booksServices.deleteBook(index: bookIndex);
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => HomePage(),
-                      ),
-                    );
-                    refrech();
-                    MySnackBar(
-                        text: "${books[bookIndex].name} Deleted",
-                        context: context);
-                  },
-                ),
+              //* delete button
+              Button(
+                color: Colors.red,
+                text: "Delete",
+                onTap: () {
+                  booksServices.deleteBook(index: bookIndex);
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => HomePage(),
+                    ),
+                  );
+                  refrech();
+                  MySnackBar(
+                      text: "${books[bookIndex].name} Deleted",
+                      context: context);
+                },
               ),
-              Padding(
-                padding: const EdgeInsets.only(right: 80),
-                child: Button(
-                  text: "Cancel",
-                  color: Colors.black,
-                  onTap: () => Navigator.pop(context),
-                ),
+
+              //* divider
+              Divider(
+                color: Colors.black,
+                height: 10,
+                endIndent: 80,
+                indent: 80,
+              ),
+
+              //* cancel button
+              Button(
+                text: "Cancel",
+                color: Color(0xFF5D4C46),
+                onTap: () => Navigator.pop(context),
               )
             ],
           )
@@ -100,16 +93,16 @@ GestureDetector Button(
   return GestureDetector(
     onTap: onTap,
     child: Container(
-      padding: EdgeInsets.all(12),
+      margin: EdgeInsets.all(5),
       decoration: BoxDecoration(
-        color: color,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Text(
         text,
         style: TextStyle(
           fontWeight: FontWeight.bold,
-          color: Colors.white,
+          color: color,
+          fontSize: 20,
         ),
       ),
     ),

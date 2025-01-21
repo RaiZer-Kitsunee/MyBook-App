@@ -25,7 +25,7 @@ class UpdatePageScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     BooksServices booksServices = BooksServices();
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: Color(0xFFFDFAF5),
       body: Column(
         children: [
           Padding(

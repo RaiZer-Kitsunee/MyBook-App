@@ -3,7 +3,7 @@
 import 'package:mybook_app/Models/PageModels.dart';
 
 class BookModels {
-  late final String name;
+  String name;
   final List<dynamic> pages;
   final DateTime bookTime;
 

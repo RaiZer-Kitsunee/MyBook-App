@@ -32,6 +32,7 @@ class _BookPagesPageState extends State<BookPagesPage> {
     TextEditingController contentController = TextEditingController();
     return Scaffold(
       backgroundColor: Color(0xFFF3E1D3),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndFloat,
       floatingActionButton: myFloatingActionButton(
         context: context,
         bookIndex: widget.bookIndex,
@@ -65,16 +66,16 @@ class _BookPagesPageState extends State<BookPagesPage> {
                       //* title
                       Padding(
                         padding: const EdgeInsets.only(left: 10),
-                        child: Text(
-                          books[widget.bookIndex].pages.isEmpty
-                              ? ""
-                              : widget.bookName,
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 20,
-                            color: Colors.black,
-                          ),
-                        ),
+                        child: books[widget.bookIndex].pages.isEmpty
+                            ? Container()
+                            : Text(
+                                widget.bookName,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                  color: Color(0xFF5E4D46),
+                                ),
+                              ),
                       ),
                     ],
                   ),
@@ -156,11 +157,13 @@ class _BookPagesPageState extends State<BookPagesPage> {
                   Icon(
                     Icons.photo_size_select_actual,
                     size: 30,
+                    color: Color(0xFF5E4D46),
                   ),
                   SizedBox(width: 20),
                   Icon(
                     Icons.edit,
                     size: 30,
+                    color: Color(0xFF5E4D46),
                   ),
                 ],
               ),
@@ -208,7 +211,7 @@ class _BookPagesPageState extends State<BookPagesPage> {
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 30,
-                        color: Colors.black,
+                        color: Color(0xFF5E4D46),
                       ),
                     ),
                   ),

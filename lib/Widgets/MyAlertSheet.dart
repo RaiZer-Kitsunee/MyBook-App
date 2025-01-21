@@ -19,8 +19,8 @@ Future<bool?> myAlertBSheet({
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              SizedBox(height: 10),
-              Icon(
+              const SizedBox(height: 10),
+              const Icon(
                 Icons.delete,
                 size: 70,
                 color: Colors.redAccent,
@@ -37,18 +37,18 @@ Future<bool?> myAlertBSheet({
                   dialogbutton(
                       context: context,
                       name: "Y E S",
-                      padding: EdgeInsets.only(left: 30),
+                      padding: const EdgeInsets.only(left: 30),
                       color: Theme.of(context).colorScheme.surface,
                       booling: true),
                   dialogbutton(
                       context: context,
                       name: "N O",
-                      padding: EdgeInsets.only(right: 30),
+                      padding: const EdgeInsets.only(right: 30),
                       color: Theme.of(context).colorScheme.surface,
                       booling: false),
                 ],
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
             ],
           ),
         ),

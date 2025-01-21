@@ -21,7 +21,7 @@ void AddBookSheet(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(20),
         ),
-        color: Colors.white,
+        color: Color(0xFFF3E1D3),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -31,8 +31,8 @@ void AddBookSheet(
             "Your Name Book is:",
             style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: Colors.black,
-              fontSize: 16,
+              color: Color(0xFF62504A),
+              fontSize: 20,
             ),
           ),
 
@@ -69,7 +69,7 @@ void AddBookSheet(
               Padding(
                 padding: const EdgeInsets.only(left: 40),
                 child: Button(
-                  color: Colors.blue,
+                  color: Color(0xFF62504A),
                   text: "Save",
                   onTap: () {
                     if (titleController.text.isNotEmpty) {

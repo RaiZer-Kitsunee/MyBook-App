@@ -9,6 +9,7 @@ import 'package:mybook_app/Widgets/BookWidget.dart';
 import 'package:mybook_app/Widgets/MemorieWidget.dart';
 import 'package:mybook_app/Widgets/BookSheets/AddBookSheet.dart';
 import 'package:mybook_app/Widgets/MyDismissible.dart';
+import 'package:mybook_app/Widgets/MyDrawer.dart';
 import 'package:mybook_app/Widgets/MySnackBar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -50,9 +51,13 @@ class _HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    // Create a GlobalKey to control the ScaffoldState
+    final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     return DefaultTabController(
       length: books.length,
       child: Scaffold(
+        key: scaffoldKey,
+        drawer: MyDrawer(context),
         backgroundColor: Color(0xFFF3E1D3),
         body: Column(
           children: [
@@ -64,8 +69,7 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   //* the more button
                   IconButton(
-                    onPressed: () => MySnackBar(
-                        context: context, text: "Setting Next Update"),
+                    onPressed: () => scaffoldKey.currentState?.openDrawer(),
                     icon: Icon(
                       Icons.menu_rounded,
                       size: 30,
@@ -86,8 +90,11 @@ class _HomePageState extends State<HomePage> {
                   books.isEmpty
                       ? Container()
                       : GestureDetector(
-                          onTap: () => AddBookSheet(context,
-                              booktitleController, () => setState(() {})),
+                          onTap: () => AddBookSheet(
+                            context,
+                            booktitleController,
+                            () => setState(() {}),
+                          ),
                           child: Container(
                             padding: EdgeInsets.all(2),
                             decoration: BoxDecoration(
@@ -99,7 +106,7 @@ class _HomePageState extends State<HomePage> {
                                   color: Color(0xFFE4CCB4),
                                   spreadRadius: 1,
                                   offset: Offset(-2, 2),
-                                )
+                                ),
                               ],
                             ),
                             child: Center(
@@ -116,18 +123,41 @@ class _HomePageState extends State<HomePage> {
 
             //* search thing
             Container(
-              padding: EdgeInsets.all(30),
               margin: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
               decoration: BoxDecoration(
                 color: Color(0xFFFDFAF5),
                 borderRadius: BorderRadius.circular(12),
+              ),
+              child: TextField(
+                decoration: InputDecoration(
+                  suffixIcon: Icon(
+                    Icons.search,
+                    color: Color(0xFFA1887F),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: Color(0xFF5D4C46),
+                    ),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(
+                      color: Color(0xFFA1887F),
+                    ),
+                  ),
+                  hintText: "Search Entries",
+                  hintStyle: TextStyle(
+                    color: Color.fromARGB(255, 178, 161, 155),
+                  ),
+                ),
               ),
             ),
 
             //* notebooks thing
             Padding(
               padding: const EdgeInsets.only(
-                  right: 20, left: 20, bottom: 25, top: 10),
+                  right: 35, left: 20, bottom: 25, top: 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -139,7 +169,11 @@ class _HomePageState extends State<HomePage> {
                       color: Color(0xFF5E4D46),
                     ),
                   ),
-                  Icon(Icons.more_vert),
+                  Icon(
+                    Icons.more_horiz_rounded,
+                    size: 30,
+                    color: Color(0xFF5E4D46),
+                  ),
                 ],
               ),
             ),
@@ -148,15 +182,15 @@ class _HomePageState extends State<HomePage> {
             Padding(
               padding: const EdgeInsets.only(left: 20.0),
               child: SizedBox(
-                height: 250,
+                height: 280,
                 child: books.isEmpty
                     ? ifTheBooksIsEmpty()
                     : ListView.builder(
                         scrollDirection: Axis.horizontal,
                         itemCount: books.length,
-                        itemBuilder: (context, index) => BookWidget(
-                          name: books[index].name,
-                          index: index,
+                        itemBuilder: (context, bookIndex) => BookWidget(
+                          name: books[bookIndex].name,
+                          bookIndex: bookIndex,
                           refrech: () => setState(() {}),
                         ),
                       ),
@@ -251,7 +285,7 @@ class _HomePageState extends State<HomePage> {
           width: 100,
           margin: EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: Colors.grey.shade300,
+            color: Color(0xFFE4CCB4),
             borderRadius: BorderRadius.circular(12),
           ),
         ),
@@ -287,15 +321,15 @@ class _HomePageState extends State<HomePage> {
         ),
         child: Container(
           decoration: BoxDecoration(
-            color: Colors.grey.shade400,
+            color: Color(0xFFF3E1D3),
             borderRadius: BorderRadius.circular(10),
             boxShadow: [
               BoxShadow(
                 blurRadius: 1,
-                color: Colors.grey.shade700,
+                color: Color(0xFFE4CCB4),
                 spreadRadius: 1,
-                offset: Offset(-5, 5),
-              )
+                offset: Offset(-2, 2),
+              ),
             ],
           ),
           padding: EdgeInsets.all(10),
@@ -304,6 +338,7 @@ class _HomePageState extends State<HomePage> {
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
+              color: Color(0xFF5D4C46),
             ),
           ),
         ),
