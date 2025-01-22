@@ -10,7 +10,6 @@ import 'package:mybook_app/Widgets/MemorieWidget.dart';
 import 'package:mybook_app/Widgets/BookSheets/AddBookSheet.dart';
 import 'package:mybook_app/Widgets/MyDismissible.dart';
 import 'package:mybook_app/Widgets/MyDrawer.dart';
-import 'package:mybook_app/Widgets/MySnackBar.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
@@ -38,9 +37,9 @@ class _HomePageState extends State<HomePage> {
       books = loadedJsonList.map((e) => BookModels.fromJson(e)).toList();
       setState(() {});
       print("Book List is Loaded");
+    } else {
+      print("the json String has come empty");
     }
-
-    print("the json String has come empty");
   }
 
   @override
@@ -122,61 +121,10 @@ class _HomePageState extends State<HomePage> {
             ),
 
             //* search thing
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
-              decoration: BoxDecoration(
-                color: Color(0xFFFDFAF5),
-                borderRadius: BorderRadius.circular(12),
-              ),
-              child: TextField(
-                decoration: InputDecoration(
-                  suffixIcon: Icon(
-                    Icons.search,
-                    color: Color(0xFFA1887F),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                      color: Color(0xFF5D4C46),
-                    ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(
-                      color: Color(0xFFA1887F),
-                    ),
-                  ),
-                  hintText: "Search Entries",
-                  hintStyle: TextStyle(
-                    color: Color.fromARGB(255, 178, 161, 155),
-                  ),
-                ),
-              ),
-            ),
+            HomeTextField(),
 
             //* notebooks thing
-            Padding(
-              padding: const EdgeInsets.only(
-                  right: 35, left: 20, bottom: 25, top: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    "Notebooks",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      fontSize: 28,
-                      color: Color(0xFF5E4D46),
-                    ),
-                  ),
-                  Icon(
-                    Icons.more_horiz_rounded,
-                    size: 30,
-                    color: Color(0xFF5E4D46),
-                  ),
-                ],
-              ),
-            ),
+            NoteBookTitle(),
 
             //* books part
             Padding(
@@ -271,6 +219,64 @@ class _HomePageState extends State<HomePage> {
               ),
             )
           ],
+        ),
+      ),
+    );
+  }
+
+  Padding NoteBookTitle() {
+    return Padding(
+      padding: const EdgeInsets.only(right: 35, left: 20, bottom: 25, top: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            "Notebooks",
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 28,
+              color: Color(0xFF5E4D46),
+            ),
+          ),
+          Icon(
+            Icons.more_horiz_rounded,
+            size: 30,
+            color: Color(0xFF5E4D46),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Container HomeTextField() {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
+      decoration: BoxDecoration(
+        color: Color(0xFFFDFAF5),
+        borderRadius: BorderRadius.circular(12),
+      ),
+      child: TextField(
+        decoration: InputDecoration(
+          suffixIcon: Icon(
+            Icons.search,
+            color: Color(0xFFA1887F),
+          ),
+          enabledBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(
+              color: Color(0xFF5D4C46),
+            ),
+          ),
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide(
+              color: Color(0xFFA1887F),
+            ),
+          ),
+          hintText: "Search Entries",
+          hintStyle: TextStyle(
+            color: Color.fromARGB(255, 178, 161, 155),
+          ),
         ),
       ),
     );

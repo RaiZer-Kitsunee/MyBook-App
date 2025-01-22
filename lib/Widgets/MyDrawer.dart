@@ -10,25 +10,9 @@ Drawer MyDrawer(BuildContext context) {
       children: [
         //* drawer head
         DrawerHeader(
-          child: Column(
-            children: [
-              CircleAvatar(
-                radius: 45,
-                backgroundColor: Color(0xFFFDFAF5),
-                child: Icon(
-                  Icons.person,
-                  color: Color(0xFF716059),
-                  size: 70,
-                ),
-              ),
-              SizedBox(height: 10),
-              Text(
-                "Profile",
-                style: TextStyle(
-                  color: Color(0xFF716059),
-                ),
-              )
-            ],
+          child: Image.asset(
+            "assets/diary.png",
+            scale: 6,
           ),
         ),
 
@@ -51,7 +35,7 @@ Drawer MyDrawer(BuildContext context) {
                     onTap: () {
                       Navigator.pop(context);
                       MySnackBar(
-                          text: "Nothing To Show Here", context: context);
+                          text: "Nothing To Show There", context: context);
                     },
                   ),
                 ],
